@@ -30,6 +30,9 @@ def balance_menu_button():
     home_buttons.add(
         types.KeyboardButton(text="Пополнить")
     )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
     return home_buttons
 
 def menu_tinkoff_button():
@@ -46,6 +49,9 @@ def menu_tinkoff_button():
     home_buttons.add(
         types.KeyboardButton(text="Tinkoff квитанция")
     )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
     
     home_buttons.adjust(1)
     return home_buttons
@@ -58,6 +64,9 @@ def theme_donate_button():
     home_buttons.add(
         types.KeyboardButton(text="Пополнение - белая тема")
     )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
     
     home_buttons.adjust(1)
     return home_buttons
@@ -69,6 +78,9 @@ def tinkoff_format_button():
     )
     home_buttons.add(
         types.KeyboardButton(text="Tinkoff квитанция png")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
     )
     
     home_buttons.adjust(1)
