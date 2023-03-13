@@ -37,15 +37,15 @@ def load_config(path: str = None):
 
     return Config(
         tg_bot=TgBot(
-            token="BOT_TOKEN",
-            admin_ids=[],
+            token="5890500081:AAGqjwyJJ7ZOL-KdvtDIi6ieuL1DbHnrOT4",
+            admin_ids=[762342298,6197913672],
             use_redis=False,
         ),
         db=DbConfig(
-            host='DB_HOST',
-            password='DB_PASS',
-            user='DB_USER',
-            database='DB_NAME',
+            host='localhost',
+            password='2545',
+            user='postgres',
+            database='gen-img',
             db_uri='DB_URI'
         ),
         misc=Miscellaneous()

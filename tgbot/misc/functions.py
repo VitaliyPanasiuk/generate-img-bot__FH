@@ -1,8 +1,8 @@
 from aiogram import Router, Bot, types
 from aiogram.types import Message, FSInputFile
 from tgbot.config import load_config
-from aiogram.dispatcher.fsm.context import FSMContext
-from aiogram.dispatcher.fsm.state import State, StatesGroup
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
 
 import psycopg2
 from psycopg2 import sql
@@ -13,7 +13,6 @@ import asyncio
 
 config = load_config(".env")
 bot = Bot(token=config.tg_bot.token, parse_mode="HTML")
-bot2 = Bot(token=config.tg_bot.token2, parse_mode="HTML")
 
 base = psycopg2.connect(
     dbname=config.db.database,
@@ -22,3 +21,11 @@ base = psycopg2.connect(
     host=config.db.host,
 )
 cur = base.cursor()
+
+async def auf(user_id):
+    cur.execute("SELECT * FROM users WHERE id = %s", (str(user_id),))
+    buyer = cur.fetchall()
+    if len(buyer) > 0:
+        return True
+    else:
+        return False
