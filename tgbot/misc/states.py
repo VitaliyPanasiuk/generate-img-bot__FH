@@ -25,4 +25,8 @@ class gen_tran_state(StatesGroup):
 class gen_visa_tran_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    
+class gen_tn_bank_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
 

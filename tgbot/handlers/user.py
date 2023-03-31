@@ -14,7 +14,7 @@ import datetime
 import requests
 import asyncio
 
-from tgbot.misc.states import gen_donate_state, gen_receipt_state, gen_tran_state, gen_visa_tran_state
+from tgbot.misc.states import gen_donate_state, gen_receipt_state, gen_tran_state, gen_visa_tran_state,gen_tn_bank_state
 
 from tgbot.services.del_message import delete_message
 
@@ -22,12 +22,14 @@ from tgbot.misc.gen_donate import gen_donate
 from tgbot.misc.gen_receipt import gen_receipt
 from tgbot.misc.gen_tran import gen_tran
 from tgbot.misc.gen_visa_tran import gen_visa_tran
+from tgbot.misc.gen_tn_bank import gen_tn_bank
+from tgbot.misc.gen_receipt_pdf import gen_receipt_pdf
 from tgbot.misc.functions import auf
 
 from tgbot.misc.texts import mess
 
 from tgbot.keyboards.inlineBtn import CastomCallback
-from tgbot.keyboards.textBtn import main_menu_button, menu_tinkoff_button, theme_donate_button, tinkoff_format_button, balance_menu_button
+from tgbot.keyboards.textBtn import main_menu_button, balance_menu_button, menu_tinkoff_button,checks_donate_button,checks_withdrawal_button
 # CastomCallback.filter(F.action == "") // callback_query: types.CallbackQuery, callback_data: SellersCallbackFactory, state: FSMContext
 
 import psycopg2
@@ -52,6 +54,7 @@ cur = base.cursor()
 @user_router.message(Command("start"))
 async def user_start(message: types.Message):
     user_id = message.from_user.id
+    text = message.text
     
     auf_user = await auf(str(user_id))
     print(auf_user)
@@ -80,11 +83,24 @@ async def user_start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     await bot.send_message(user_id, "В разарботке",reply_markup=types.ReplyKeyboardRemove())
     
-@user_router.message(F.text == 'Tinkoff')
+@user_router.message(F.text == 'Чеки Tinkoff')
 async def user_start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     btn = menu_tinkoff_button()
-    await bot.send_message(user_id, "Выбери нужный скрин",reply_markup=btn.as_markup(resize_keyboard=True))
+    await bot.send_message(user_id, "Выбери тип чеков",reply_markup=btn.as_markup(resize_keyboard=True))
+
+
+@user_router.message(F.text == 'Чеки полнения')
+async def user_start(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    btn = checks_donate_button()
+    await bot.send_message(user_id, "Выбери нужный чек",reply_markup=btn.as_markup(resize_keyboard=True))
+
+@user_router.message(F.text == 'Чеки вывода')
+async def user_start(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    btn = checks_withdrawal_button()
+    await bot.send_message(user_id, "Выбери нужный чек",reply_markup=btn.as_markup(resize_keyboard=True))
     
 # , StateFilter('gen_state')
 @user_router.message(F.text == 'Пополнение - Visa')
@@ -115,12 +131,14 @@ async def test_start(message: types.Message, state: FSMContext):
         await bot.send_photo(user_id, photo,reply_markup=btn.as_markup(resize_keyboard=True))
         os.remove(f'tgbot/img/{user_id}_output_visa_tran.png')
         await state.clear()
-    except:
-        logging.error(f"Problem with data from user")
+    except Exception as e:
+        btn = main_menu_button()
+        print(f"Problem with data from user")
+        print(e)
         await bot.send_message(user_id, "Данные были введены не верно, попробуйте еще раз",reply_markup=btn.as_markup(resize_keyboard=True))
         await state.set_state(gen_visa_tran_state.gen_data)
     
-@user_router.message(F.text == 'Пополнение')
+@user_router.message(F.text == 'Пополнение - Visa direct')
 async def user_start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     photo = FSInputFile('tgbot/img/ex-donate.jpg')
@@ -143,16 +161,19 @@ async def test_start(message: types.Message, state: FSMContext):
         await bot.send_photo(user_id, photo, reply_markup=btn.as_markup(resize_keyboard=True))
         os.remove(f'tgbot/img/{user_id}_output_donate.png')
         await state.clear()
-    except:
-        logging.error(f"Problem with data from user")
+    except Exception as e:
+        btn = main_menu_button()
+        print(f"Problem with data from user")
+        print(e)
         await bot.send_message(user_id, "Данные были введены не верно, попробуйте еще раз",reply_markup=btn.as_markup(resize_keyboard=True))
         await state.set_state(gen_donate_state.gen_data)
     
     
-@user_router.message(F.text == 'Перевод - квитанция')
+@user_router.message(F.text == 'Пополнение - Перевод с карты')
 async def user_start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
-    photo = FSInputFile('tgbot/img/ex-donate.jpg')
+    # change ex photo
+    photo = FSInputFile('tgbot/img/ex-card-tran.jpg')
     await bot.send_photo(user_id, photo,caption=mess['tran-description'],reply_markup=types.ReplyKeyboardRemove())
     await state.set_state(gen_tran_state.gen_data)
     
@@ -176,20 +197,22 @@ async def test_start(message: types.Message, state: FSMContext):
         await bot.send_photo(user_id, photo,reply_markup=btn.as_markup(resize_keyboard=True))
         os.remove(f'tgbot/img/{user_id}_output_tran.png')
         await state.clear()
-    except:
-        logging.error(f"Problem with data from user")
+    except Exception as e:
+        btn = main_menu_button()
+        print(f"Problem with data from user")
+        print(e)
         await bot.send_message(user_id, "Данные были введены не верно, попробуйте еще раз",reply_markup=btn.as_markup(resize_keyboard=True))
         await state.set_state(gen_tran_state.gen_data)
     
     
-@user_router.message(F.text == 'Tinkoff квитанция')
-async def user_start(message: types.Message, state: FSMContext):
-    user_id = message.from_user.id
-    btn = tinkoff_format_button()
-    await bot.send_message(user_id, "Выбери нужный формат",reply_markup=btn.as_markup(resize_keyboard=True))
+# @user_router.message(F.text == 'Tinkoff квитанция')
+# async def user_start(message: types.Message, state: FSMContext):
+#     user_id = message.from_user.id
+#     btn = tinkoff_format_button()
+#     await bot.send_message(user_id, "Выбери нужный формат",reply_markup=btn.as_markup(resize_keyboard=True))
     
 
-@user_router.message(F.text == 'Tinkoff квитанция pdf')
+@user_router.message(F.text == 'Tinkoff - Tinkoff (pdf)')
 async def user_start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     photo = FSInputFile('tgbot/img/ex-receipt.jpg')
@@ -210,19 +233,21 @@ async def test_start(message: types.Message, state: FSMContext):
             'receiver' : dt[5],
             'id_tran' : dt[6],
         }
-        gen_receipt(data,user_id)
+        gen_receipt_pdf(data,user_id)
         photo = FSInputFile(f'tgbot/img/{user_id}_output_receipt.pdf')
         btn = main_menu_button()
         await bot.send_document(user_id, photo,reply_markup=btn.as_markup(resize_keyboard=True))
         os.remove(f'tgbot/img/{user_id}_output_receipt.pdf')
         os.remove(f'tgbot/img/{user_id}_output_receipt.png')
         await state.clear()
-    except:
-        logging.error(f"Problem with data from user")
+    except Exception as e:
+        btn = main_menu_button()
+        print(f"Problem with data from user")
+        print(e)
         await bot.send_message(user_id, "Данные были введены не верно, попробуйте еще раз",reply_markup=btn.as_markup(resize_keyboard=True))
         await state.set_state(gen_receipt_state.gen_data)
     
-@user_router.message(F.text == 'Tinkoff квитанция png')
+@user_router.message(F.text == 'Tinkoff - Tinkoff')
 async def user_start(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     photo = FSInputFile('tgbot/img/ex-receipt.jpg')
@@ -250,8 +275,41 @@ async def test_start(message: types.Message, state: FSMContext):
         os.remove(f'tgbot/img/{user_id}_output_receipt.png')
         os.remove(f'tgbot/img/{user_id}_output_receipt.pdf')
         await state.clear()
-    except:
-        logging.error(f"Problem with data from user")
+    except Exception as e:
+        btn = main_menu_button()
+        print(f"Problem with data from user")
+        print(e)
         await bot.send_message(user_id, "Данные были введены не верно, попробуйте еще раз",reply_markup=btn.as_markup(resize_keyboard=True))
         await state.set_state(gen_receipt_state.gen_data2)
     
+@user_router.message(F.text == 'Tinkoff - Банк')
+async def user_start(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    photo = FSInputFile('tgbot/img/ex-tn-bank.jpg')
+    await bot.send_photo(user_id, photo,caption=mess['tn-bank'],reply_markup=types.ReplyKeyboardRemove())
+    await state.set_state(gen_tn_bank_state.gen_data)
+    
+@user_router.message(F.text, gen_tn_bank_state.gen_data)
+async def test_start(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    try:
+        dt = message.text.splitlines()
+        data = {
+            'time' : dt[0],
+            'balance' : dt[1],
+            'tran_sum' : dt[2],
+            'tn_name' : dt[3],
+            'card_num' : dt[4],
+        }
+        gen_tn_bank(data,user_id)
+        photo = FSInputFile(f'tgbot/img/{user_id}_output_tn_bank.png')
+        btn = main_menu_button()
+        await bot.send_photo(user_id, photo,reply_markup=btn.as_markup(resize_keyboard=True))
+        os.remove(f'tgbot/img/{user_id}_output_tn_bank.png')
+        await state.clear()
+    except Exception as e:
+        btn = main_menu_button()
+        print(f"Problem with data from user")
+        print(e)
+        await bot.send_message(user_id, "Данные были введены не верно, попробуйте еще раз",reply_markup=btn.as_markup(resize_keyboard=True))
+        await state.set_state(gen_tn_bank_state.gen_data)
