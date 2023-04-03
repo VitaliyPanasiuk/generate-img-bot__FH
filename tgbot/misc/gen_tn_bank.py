@@ -60,4 +60,4 @@ def gen_tn_bank(data,user_id):
     
     
     
-    im.save(f'tgbot/img/{user_id}_output_tn_bank.png')
+    im.save(f'tgbot/img/{user_id}_output_withdrawal_to_tn.png')

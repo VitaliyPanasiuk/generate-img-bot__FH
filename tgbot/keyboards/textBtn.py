@@ -123,6 +123,13 @@ def checks_withdrawal_button():
     home_buttons.adjust(2,2,1,1)
     return home_buttons
 
+def return_to_home_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
+    home_buttons.adjust(1)
+    return home_buttons
 # def theme_donate_button():
 #     home_buttons = ReplyKeyboardBuilder()
 #     home_buttons.add(

@@ -7,11 +7,14 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from tgbot.config import load_config
 from tgbot.handlers.admin import admin_router
 from tgbot.handlers.user import user_router
+from tgbot.handlers.tn_donate import tn_donate_router
+from tgbot.handlers.tn_withdrawal import tn_withdrawal_router
 from tgbot.middlewares.config import ConfigMiddleware
 from tgbot.db import start_db
 from tgbot.services import broadcaster
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 
 async def on_startup(bot: Bot, admin_ids: list[int]):
@@ -39,6 +42,8 @@ async def main():
     for router in [
         admin_router,
         user_router,
+        tn_withdrawal_router,
+        tn_donate_router,
     ]:
         dp.include_router(router)
 

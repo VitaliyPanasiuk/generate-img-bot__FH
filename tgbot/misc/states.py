@@ -29,4 +29,16 @@ class gen_visa_tran_state(StatesGroup):
 class gen_tn_bank_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    
+class gen_to_bank_pdf_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class withdrawal_to_tn_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class withdrawal_to_tn_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
 

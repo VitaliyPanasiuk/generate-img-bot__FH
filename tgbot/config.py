@@ -37,8 +37,8 @@ def load_config(path: str = None):
 
     return Config(
         tg_bot=TgBot(
-            token="5890500081:AAGqjwyJJ7ZOL-KdvtDIi6ieuL1DbHnrOT4",
-            admin_ids=[762342298,6197913672],
+            token="5257942822:AAFqBBqGZs6UJZsF3fJ6fY-f8pCFQelxXRw",
+            admin_ids=[762342298],
             use_redis=False,
         ),
         db=DbConfig(
