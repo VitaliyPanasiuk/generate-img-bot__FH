@@ -41,4 +41,28 @@ class withdrawal_to_tn_state(StatesGroup):
 class withdrawal_to_tn_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    
+class mailling_state(StatesGroup):
+    message = State()
+    
+class change_tariff_state(StatesGroup):
+    name_of_tariff = State()
+    new_price = State()
+    
+class change_balance_state(StatesGroup):
+    user = State()
+    amount = State()
+    
+class change_requisites_state(StatesGroup):
+    adress = State()
+    adress2 = State()
+    
+    
+class await_photo_of_transaction_state(StatesGroup):
+    photo = State()
+    
+class end_change_balance_state(StatesGroup):
+    user = State()
+    order_id = State()
+    amount = State()
 

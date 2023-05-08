@@ -130,32 +130,136 @@ def return_to_home_button():
     )
     home_buttons.adjust(1)
     return home_buttons
-# def theme_donate_button():
-#     home_buttons = ReplyKeyboardBuilder()
-#     home_buttons.add(
-#         types.KeyboardButton(text="Пополнение - черная тема")
-#     )
-#     home_buttons.add(
-#         types.KeyboardButton(text="Пополнение - белая тема")
-#     )
-#     home_buttons.add(
-#         types.KeyboardButton(text="Главное меню")
-#     )
-    
-#     home_buttons.adjust(1)
-#     return home_buttons
 
-# def tinkoff_format_button():
-#     home_buttons = ReplyKeyboardBuilder()
-#     home_buttons.add(
-#         types.KeyboardButton(text="Tinkoff квитанция pdf")
-#     )
-#     home_buttons.add(
-#         types.KeyboardButton(text="Tinkoff квитанция png")
-#     )
-#     home_buttons.add(
-#         types.KeyboardButton(text="Главное меню")
-#     )
+def donate_choice_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Пополнить Фиатом")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Пополнить Криптой")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
+    home_buttons.adjust(1)
+    return home_buttons
+
+
+def admin_panel_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Тарифы")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Рассылка")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Вывод валют")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Изменение баланса")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Реквизиты")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Транзакции")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Посмотреть информацию про инвестора")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
     
-#     home_buttons.adjust(1)
-#     return home_buttons
+    home_buttons.adjust(3,3,1,1)
+    return home_buttons
+
+def tariff_panel_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Тарифы - Tinkoff")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тарифы - Сбербанк")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тарифы - Чеки бирж")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тарифы - Чеки кошельков")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тарифы - Покупка бирж")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тарифы - Покупка кошельков")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Админ меню")
+    )
+    
+    home_buttons.adjust(3,2,1,1,1)
+    return home_buttons
+
+
+def tn_tariffs_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Тариф - Пополнение - Visa")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тариф - Пополнение - Visa direct")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тариф - Пополнение - Перевод с карты")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тариф - Tinkoff - Tinkoff")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тариф - Tinkoff - Банк")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тариф - Вывод на Tinkoff")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тариф - Вывод на Банк (pdf)")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Тариф - Tinkoff - Tinkoff (pdf)")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Админ меню")
+    )
+    
+    home_buttons.adjust(2,2,2,2,2)
+    return home_buttons
+
+def admin_return_menu_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Админ меню")
+    )
+    return home_buttons
+
+
+def changing_requisites_menu_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Изменить адрес крипто кошелька")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Изменить номер карты")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Админ меню")
+    )
+    return home_buttons

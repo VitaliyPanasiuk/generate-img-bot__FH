@@ -50,3 +50,5 @@ def load_config(path: str = None):
         ),
         misc=Miscellaneous()
     )
+
+# insert into tn_tariff (name, costs) values ('donate-visa',30),('donate-visa direct',30),('donate-card transaction',30),('tn - tn',30),('tn - bank',30),('wn to tn',30),('wn to bank pdf',30),('tn - tn pdf ',30);

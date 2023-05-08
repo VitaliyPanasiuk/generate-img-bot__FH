@@ -29,3 +29,25 @@ async def auf(user_id):
         return True
     else:
         return False
+    
+    
+async def change_balance(user_id, amount, way):
+    if way == 'plus':
+        cur.execute("UPDATE users SET balance = balance + %s  WHERE id = %s", (int(amount),str(user_id)))
+    else:
+        cur.execute("UPDATE users SET balance = balance - %s  WHERE id = %s", (int(amount),str(user_id)))
+        
+    base.commit()
+    
+async def add_transaction(user_id, photo, time):
+    cur.execute("INSERT INTO transactions (user_id, photo, time, status) VALUES (%s,%s,%s,FALSE)",(user_id, photo, time))
+        
+    base.commit()
+    
+async def end_transaction(tr_id):
+    cur.execute("UPDATE transactions SET status = TRUE  WHERE id = %s", (tr_id,))
+        
+    base.commit()
+    
+
+    

@@ -4,19 +4,19 @@ from aiogram.filters.callback_data import CallbackData
 from typing import Optional
 
 
-class CastomCallback(CallbackData, prefix="fabnum"):
+class CastomCallbackOfEndingTransaction(CallbackData, prefix="fabnum"):
     # castom class for callback_data
     action: str
-    order_id: Optional[int]
+    transaction_id: Optional[int]
 
-def example_button():
-    example = InlineKeyboardBuilder()
-    example.add(types.InlineKeyboardButton(
-        text='confirm',
-        callback_data=CastomCallback(action="end_order")
-    ))
-    example.add(types.InlineKeyboardButton(
-        text='skip',
-        callback_data='skip'
-    ))
-    return example
+def transaction_button(id):
+    # example = InlineKeyboardBuilder()
+    # example.add(types.InlineKeyboardButton(
+    #     text='Готово',
+    #     callback_data=CastomCallbackOfEndingTransaction(action="end_transaction",transaction_id=int(id))
+    # ))
+    builder = InlineKeyboardBuilder()
+    builder.button(
+        text="Готово", callback_data=CastomCallbackOfEndingTransaction(action="end_transaction",transaction_id=int(id))
+    )
+    return builder

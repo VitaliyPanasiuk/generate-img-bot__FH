@@ -35,7 +35,7 @@ async def reg_user(user_id):
     host=config.db.host,)
     
     cur = base.cursor()
-    cur.execute("INSERT INTO users (id) VALUES (%s)",(str(user_id),))
+    cur.execute("INSERT INTO users (id) VALUES (%s)",(user_id,))
     
     base.commit()
     
