@@ -9,6 +9,7 @@ from tgbot.handlers.admin import admin_router
 from tgbot.handlers.user import user_router
 from tgbot.handlers.tn_donate import tn_donate_router
 from tgbot.handlers.tn_withdrawal import tn_withdrawal_router
+from tgbot.handlers.sber import sber_router
 from tgbot.middlewares.config import ConfigMiddleware
 from tgbot.db import start_db
 from tgbot.services import broadcaster
@@ -44,6 +45,7 @@ async def main():
         user_router,
         tn_withdrawal_router,
         tn_donate_router,
+        sber_router,
     ]:
         dp.include_router(router)
 

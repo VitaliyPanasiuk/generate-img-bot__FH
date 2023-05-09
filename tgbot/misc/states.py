@@ -65,4 +65,20 @@ class end_change_balance_state(StatesGroup):
     user = State()
     order_id = State()
     amount = State()
+    
+class sber_qiwi_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class sber_sber_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class sber_sber_png_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class sber_tn_png_andr_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
 
