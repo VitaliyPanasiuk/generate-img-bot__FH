@@ -38,26 +38,7 @@ def balance_menu_button():
     )
     return home_buttons
 
-# def menu_tinkoff_button():
-#     home_buttons = ReplyKeyboardBuilder()
-#     home_buttons.add(
-#         types.KeyboardButton(text="Пополнение - Visa")
-#     )
-#     home_buttons.add(
-#         types.KeyboardButton(text="Пополнение")
-#     )
-#     home_buttons.add(
-#         types.KeyboardButton(text="Перевод - квитанция")
-#     )
-#     home_buttons.add(
-#         types.KeyboardButton(text="Tinkoff квитанция")
-#     )
-#     home_buttons.add(
-#         types.KeyboardButton(text="Главное меню")
-#     )
-    
-#     home_buttons.adjust(1)
-#     return home_buttons
+
 
 def menu_tinkoff_button():
     home_buttons = ReplyKeyboardBuilder()
@@ -70,13 +51,6 @@ def menu_tinkoff_button():
     home_buttons.add(
         types.KeyboardButton(text="Главное меню")
     )
-    # home_buttons.add(
-    #     types.KeyboardButton(text="Перевод - квитанция")
-    # )
-    # home_buttons.add(
-    #     types.KeyboardButton(text="Tinkoff квитанция")
-    # )
-
     
     home_buttons.adjust(1)
     return home_buttons
@@ -261,5 +235,38 @@ def changing_requisites_menu_button():
     )
     home_buttons.add(
         types.KeyboardButton(text="Админ меню")
+    )
+    return home_buttons
+
+
+
+
+# сбербанк кнопки
+
+def sber_menu_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Сбер - QiWi")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Сбер - Сбер")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Сбер - Tinkoff")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
+    return home_buttons
+def sber_sber_menu_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Сбер - Сбер png")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Сбер - Сбер pdf")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
     )
     return home_buttons
