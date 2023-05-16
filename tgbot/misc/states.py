@@ -81,4 +81,12 @@ class sber_sber_png_state(StatesGroup):
 class sber_tn_png_andr_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    
+class rural_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class withdraw_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
 

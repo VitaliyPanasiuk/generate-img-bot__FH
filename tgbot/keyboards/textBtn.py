@@ -11,6 +11,12 @@ def main_menu_button():
         types.KeyboardButton(text="Чеки Сбербанк")
     )
     home_buttons.add(
+        types.KeyboardButton(text="Чек Россельхозбанк")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Bianance вывод")
+    )
+    home_buttons.add(
         types.KeyboardButton(text="Чеки бирж")
     )
     home_buttons.add(

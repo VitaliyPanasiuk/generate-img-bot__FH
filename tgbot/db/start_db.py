@@ -45,6 +45,10 @@ async def postgre_start():
             id    serial primary key,
             name  text,
             costs integer default 30)''')
+    cur.execute('''CREATE TABLE IF NOT EXISTS rural_binance(
+            id    serial primary key,
+            name  text,
+            costs integer default 30)''')
     
     
     base.commit()
