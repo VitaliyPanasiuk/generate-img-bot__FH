@@ -99,4 +99,12 @@ class rural_state(StatesGroup):
 class withdraw_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    
+class tran_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class tran_check_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
 

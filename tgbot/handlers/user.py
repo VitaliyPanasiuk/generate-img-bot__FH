@@ -30,7 +30,7 @@ from tgbot.misc.functions import auf,add_transaction
 from tgbot.misc.texts import mess
 
 # from tgbot.keyboards.inlineBtn import CastomCallback
-from tgbot.keyboards.textBtn import main_menu_button, balance_menu_button, menu_tinkoff_button,checks_donate_button,checks_withdrawal_button,return_to_home_button,donate_choice_button
+from tgbot.keyboards.textBtn import main_menu_button, balance_menu_button, menu_tinkoff_button,checks_donate_button,checks_withdrawal_button,return_to_home_button,donate_choice_button,binance_menu_button
 # CastomCallback.filter(F.action == "") // callback_query: types.CallbackQuery, callback_data: SellersCallbackFactory, state: FSMContext
 
 import psycopg2
@@ -70,6 +70,13 @@ async def user_main_menu(message: types.Message, state: FSMContext):
     await state.clear()
     btn = main_menu_button()
     await bot.send_message(user_id, "Привет, выбери сервис",reply_markup=btn.as_markup(resize_keyboard=True))
+    
+@user_router.message(F.text == 'Binance')
+async def user_main_menu(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    await state.clear()
+    btn = binance_menu_button()
+    await bot.send_message(user_id, "Привет, выбери нужный скрин",reply_markup=btn.as_markup(resize_keyboard=True))
     
 @user_router.message(F.text == 'Баланс')
 async def user_balance(message: types.Message, state: FSMContext):
