@@ -18,6 +18,16 @@ class gen_donate_state(StatesGroup):
 class gen_receipt_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    gen_data2 = State() 
+    
+class gen_receipt_new_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    gen_data2 = State() 
+    
+class gen_receipt_new_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
     gen_data2 = State()
 class gen_tran_state(StatesGroup):
     user_id = State()
@@ -79,6 +89,14 @@ class sber_sber_png_state(StatesGroup):
     gen_data = State()
     
 class sber_tn_png_andr_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class rural_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class withdraw_state(StatesGroup):
     user_id = State()
     gen_data = State()
 
