@@ -71,7 +71,7 @@ async def user_main_menu(message: types.Message, state: FSMContext):
     btn = main_menu_button()
     await bot.send_message(user_id, "Привет, выбери сервис",reply_markup=btn.as_markup(resize_keyboard=True))
     
-@user_router.message(F.text == 'Bianance')
+@user_router.message(F.text == 'Binance')
 async def user_main_menu(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     await state.clear()

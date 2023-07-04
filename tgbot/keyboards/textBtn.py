@@ -14,7 +14,7 @@ def main_menu_button():
         types.KeyboardButton(text="Чек Россельхозбанк")
     )
     home_buttons.add(
-        types.KeyboardButton(text="Bianance")
+        types.KeyboardButton(text="Binance")
     )
     home_buttons.add(
         types.KeyboardButton(text="Чеки бирж")
@@ -37,10 +37,10 @@ def main_menu_button():
 def binance_menu_button():
     home_buttons = ReplyKeyboardBuilder()
     home_buttons.add(
-        types.KeyboardButton(text="Bianance транзакция")
+        types.KeyboardButton(text="Binance транзакция")
     )
     home_buttons.add(
-        types.KeyboardButton(text="Bianance вывод")
+        types.KeyboardButton(text="Binance вывод")
     )
     home_buttons.add(
         types.KeyboardButton(text="Главное меню")

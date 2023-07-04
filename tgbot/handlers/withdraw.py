@@ -60,7 +60,7 @@ base = psycopg2.connect(
 )
 cur = base.cursor()
 
-@withdraw_router.message(F.text == 'Bianance вывод')
+@withdraw_router.message(F.text == 'Binance вывод')
 async def tn_tn_pdf(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     photo = FSInputFile('tgbot/rural_binance/binance_withdraw/withdraw_ex.png')

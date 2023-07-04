@@ -57,7 +57,7 @@ base = psycopg2.connect(
 )
 cur = base.cursor()
 
-@bin_tran_router.message(F.text == 'Bianance транзакция')
+@bin_tran_router.message(F.text == 'Binance транзакция')
 async def tn_tn_pdf(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     btn = binance_tran_menu_button()
