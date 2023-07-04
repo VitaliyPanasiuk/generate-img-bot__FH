@@ -14,7 +14,7 @@ import datetime
 import requests
 import asyncio
 
-from tgbot.misc.states import gen_donate_state, gen_receipt_state, gen_tran_state, gen_visa_tran_state,gen_tn_bank_state,gen_to_bank_pdf_state,withdrawal_to_tn_state
+from tgbot.misc.states import gen_donate_state, gen_receipt_state, gen_tran_state, gen_visa_tran_state,gen_tn_bank_state,gen_to_bank_pdf_state,withdrawal_to_tn_state,gen_receipt_new_state,gen_receipt_new_state
 
 from tgbot.services.del_message import delete_message
 
@@ -27,6 +27,9 @@ from tgbot.misc.gen_receipt_pdf import gen_receipt_pdf
 from tgbot.misc.gen_to_bank_pdf import gen_to_bank_pdf
 from tgbot.misc.gen_tn_to_bank import gen_tn_to_bank
 from tgbot.misc.functions import auf, change_balance
+
+from tgbot.tn.tn_receipt_new_pdf.tn_receipt_new_pdf import gen_new_receipt_pdf
+from tgbot.tn.tn_tn_new.tn_tn_new_png import gen_receipt_new_png
 
 from tgbot.misc.texts import mess
 
@@ -52,7 +55,7 @@ base = psycopg2.connect(
 )
 cur = base.cursor()
 
-@tn_withdrawal_router.message(F.text == 'Tinkoff - Tinkoff (pdf)')
+@tn_withdrawal_router.message(F.text == 'Tinkoff - Tinkoff (pdf) старый')
 async def tn_tn_pdf(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     photo = FSInputFile('tgbot/img/ex-receipt.jpg')
@@ -103,8 +106,61 @@ async def tn_tn_pdf_s(message: types.Message, state: FSMContext):
         btn = main_menu_button()
         await bot.send_message(user_id, "На счету недостаточно средрсв, пополните сначала баланс",reply_markup=btn.as_markup(resize_keyboard=True))
         await state.clear()
+        
+        
+@tn_withdrawal_router.message(F.text == 'Tinkoff - Tinkoff (pdf) новый')
+async def tn_tn_pdf(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    photo = FSInputFile('tgbot/img/ex-receipt.jpg')
+    btn = return_to_home_button()
+    await bot.send_photo(user_id, photo,caption=mess['receipt-description'],reply_markup=btn.as_markup(resize_keyboard=True))
+    cur.execute("SELECT * FROM tn_tariff WHERE name = 'tn - tn pdf'")
+    price = cur.fetchone()
+    cur.execute("SELECT * FROM users WHERE id = %s",(user_id,))
+    balance = cur.fetchone()
+    await bot.send_message(user_id, f"Стоимость генерации {price[2]}\nНа вашем счету - {balance[1]}",reply_markup=btn.as_markup(resize_keyboard=True))
+    await state.set_state(gen_receipt_new_state.gen_data)
     
-@tn_withdrawal_router.message(F.text == 'Tinkoff - Tinkoff')
+@tn_withdrawal_router.message(F.text, gen_receipt_new_state.gen_data)
+async def tn_tn_pdf_s(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    cur.execute("SELECT * FROM tn_tariff WHERE name = 'tn - tn pdf'")
+    price = cur.fetchone()
+    cur.execute("SELECT * FROM users WHERE id = %s", (str(user_id),))
+    balance = cur.fetchone()
+    if balance[1] >= price[2]:
+        try:
+            dt = message.text.splitlines()
+            data = {
+                'time' : dt[0],
+                'tn_time' : dt[1],
+                'tran_sum' : dt[2],
+                'sender' : dt[3],
+                'card_receiver' : dt[4],
+                'receiver' : dt[5],
+                'id_tran' : dt[6],
+            }
+            gen_new_receipt_pdf(data,user_id)
+            photo = FSInputFile(f'tgbot/tn/{user_id}_output_new_receipt.pdf')
+            btn = main_menu_button()
+            await bot.send_document(user_id, photo,reply_markup=btn.as_markup(resize_keyboard=True))
+            os.remove(f'tgbot/tn/{user_id}_output_new_receipt.pdf')
+            os.remove(f'tgbot/tn/{user_id}_output_new_receipt.png')
+            await change_balance(user_id, price[2],'minus')
+            
+            await state.clear()
+        except Exception as e:
+            btn = main_menu_button()
+            print(f"Problem with data from user")
+            print(e)
+            await bot.send_message(user_id, "Данные были введены не верно, попробуйте еще раз",reply_markup=btn.as_markup(resize_keyboard=True))
+            await state.set_state(gen_receipt_new_state.gen_data)
+    else:
+        btn = main_menu_button()
+        await bot.send_message(user_id, "На счету недостаточно средрсв, пополните сначала баланс",reply_markup=btn.as_markup(resize_keyboard=True))
+        await state.clear()
+    
+@tn_withdrawal_router.message(F.text == 'Tinkoff - Tinkoff старый')
 async def tn_tn(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     photo = FSInputFile('tgbot/img/ex-receipt.jpg')
@@ -151,6 +207,57 @@ async def tn_tn_s(message: types.Message, state: FSMContext):
             print(e)
             await bot.send_message(user_id, "Данные были введены не верно, попробуйте еще раз",reply_markup=btn.as_markup(resize_keyboard=True))
             await state.set_state(gen_receipt_state.gen_data2)
+    else:
+        btn = main_menu_button()
+        await bot.send_message(user_id, "На счету недостаточно средрсв, пополните сначала баланс",reply_markup=btn.as_markup(resize_keyboard=True))
+        await state.clear()
+        
+@tn_withdrawal_router.message(F.text == 'Tinkoff - Tinkoff новый')
+async def tn_tn(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    photo = FSInputFile('tgbot/img/ex-receipt.jpg')
+    btn = return_to_home_button()
+    await bot.send_photo(user_id, photo,caption=mess['receipt-description'],reply_markup=btn.as_markup(resize_keyboard=True))
+    cur.execute("SELECT * FROM tn_tariff WHERE name = 'tn - tn'")
+    price = cur.fetchone()
+    cur.execute("SELECT * FROM users WHERE id = %s",(user_id,))
+    balance = cur.fetchone()
+    await bot.send_message(user_id, f"Стоимость генерации {price[2]}\nНа вашем счету - {balance[1]}",reply_markup=btn.as_markup(resize_keyboard=True))
+    await state.set_state(gen_receipt_new_state.gen_data2)
+    
+@tn_withdrawal_router.message(F.text, gen_receipt_new_state.gen_data2)
+async def tn_tn_s(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    cur.execute("SELECT * FROM tn_tariff WHERE name = 'tn - tn'")
+    price = cur.fetchone()
+    cur.execute("SELECT * FROM users WHERE id = %s", (str(user_id),))
+    balance = cur.fetchone()
+    if balance[1] >= price[2]:
+        try:
+            dt = message.text.splitlines()
+            data = {
+                'time' : dt[0],
+                'tn_time' : dt[1],
+                'tran_sum' : dt[2],
+                'sender' : dt[3],
+                'card_receiver' : dt[4],
+                'receiver' : dt[5],
+                'id_tran' : dt[6],
+            }
+            gen_receipt_new_png(data,user_id)
+            photo = FSInputFile(f'tgbot/img/{user_id}_output_new_receipt_png.png')
+            btn = main_menu_button()
+            await bot.send_photo(user_id, photo,reply_markup=btn.as_markup(resize_keyboard=True))
+            os.remove(f'tgbot/img/{user_id}_output_new_receipt_png.png')
+            await change_balance(user_id, price[2],'minus')
+            
+            await state.clear()
+        except Exception as e:
+            btn = main_menu_button()
+            print(f"Problem with data from user")
+            print(e)
+            await bot.send_message(user_id, "Данные были введены не верно, попробуйте еще раз",reply_markup=btn.as_markup(resize_keyboard=True))
+            await state.set_state(gen_receipt_new_state.gen_data2)
     else:
         btn = main_menu_button()
         await bot.send_message(user_id, "На счету недостаточно средрсв, пополните сначала баланс",reply_markup=btn.as_markup(resize_keyboard=True))

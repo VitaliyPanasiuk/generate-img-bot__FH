@@ -18,6 +18,16 @@ class gen_donate_state(StatesGroup):
 class gen_receipt_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    gen_data2 = State() 
+    
+class gen_receipt_new_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    gen_data2 = State() 
+    
+class gen_receipt_new_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
     gen_data2 = State()
 class gen_tran_state(StatesGroup):
     user_id = State()

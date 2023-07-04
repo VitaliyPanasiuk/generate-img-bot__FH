@@ -82,7 +82,10 @@ def checks_donate_button():
 def checks_withdrawal_button():
     home_buttons = ReplyKeyboardBuilder()
     home_buttons.add(
-        types.KeyboardButton(text="Tinkoff - Tinkoff")
+        types.KeyboardButton(text="Tinkoff - Tinkoff старый")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Tinkoff - Tinkoff новый")
     )
     home_buttons.add(
         types.KeyboardButton(text="Tinkoff - Банк")
@@ -94,13 +97,16 @@ def checks_withdrawal_button():
         types.KeyboardButton(text="Вывод на Банк (pdf)")
     )
     home_buttons.add(
-        types.KeyboardButton(text="Tinkoff - Tinkoff (pdf)")
+        types.KeyboardButton(text="Tinkoff - Tinkoff (pdf) старый")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Tinkoff - Tinkoff (pdf) новый")
     )
     home_buttons.add(
         types.KeyboardButton(text="Главное меню")
     )
     
-    home_buttons.adjust(2,2,1,1)
+    home_buttons.adjust(2)
     return home_buttons
 
 def return_to_home_button():
