@@ -12,6 +12,7 @@ from tgbot.handlers.tn_withdrawal import tn_withdrawal_router
 from tgbot.handlers.rural import rural_router
 from tgbot.handlers.withdraw import withdraw_router
 from tgbot.handlers.sber import sber_router
+from tgbot.handlers.bin_tran import bin_tran_router
 from tgbot.middlewares.config import ConfigMiddleware
 from tgbot.db import start_db
 from tgbot.services import broadcaster
@@ -50,6 +51,7 @@ async def main():
         sber_router,
         rural_router,
         withdraw_router,
+        bin_tran_router,
     ]:
         dp.include_router(router)
 
