@@ -249,7 +249,29 @@ TTq4GUFGAh2a9VAzabsMfyaqZB8KTd9bim
 2023-04-27 20:41:05
     ''',
     'tran-description' : '''Введите необходимые данные, каждое с новой строки:
+- время на телефоне
 - сума транзакции
+- монета
+- кол-во подтверждений
+- сеть транзакции
+- адрес
+- txid
+- дата транзакции
+
+Пример:
+
+20:41
+400
+USDT
+20 / 15 / 0
+TRX
+TTq4GUFGAh2a9VAzabsMfyaqZB8KTd9bim
+9ece3c91c3d7a3889fe1afebd21fb4c2ce7200ecd28ed54f83971cbd3e5f037f
+2023-04-27 20:41:05
+    ''',
+    'check-tran-description' : '''Введите необходимые данные, каждое с новой строки:
+- сума транзакции
+- монета
 - кол-во подтверждений
 - сеть транзакции
 - адрес
@@ -260,6 +282,7 @@ TTq4GUFGAh2a9VAzabsMfyaqZB8KTd9bim
 
 
 400
+USDT
 20 / 15 / 0
 TRX
 TTq4GUFGAh2a9VAzabsMfyaqZB8KTd9bim

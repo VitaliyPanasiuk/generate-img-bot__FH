@@ -29,6 +29,13 @@ def generate_bin_tran(data):
     tr = Image.open('tgbot/bin_tran/tr.png')
     colon = Image.open('tgbot/bin_tran/colon.png')
     
+    font = ImageFont.truetype('tgbot/bin_tran/SFUIText-Semibold.ttf', size=23)
+    draw_way = ImageDraw.Draw(deposit)
+    draw_way.text(
+		(44, 18),
+		data['time'],
+		font=font,
+		fill='#22272a')
     
     # разбиение даты на элементы
     time_value2 = data['date'].split(' ')
@@ -105,7 +112,15 @@ def generate_bin_tran(data):
     	font=font,
     	fill='#161b1f')
     
-    deposit.paste(usdt, (int(292-((int(font.getsize(data['amount'])[0]) + 8 + 54)/2) + int(font.getsize(data['amount'])[0]) + 10), 235), mask=usdt.convert('RGBA'))
+    font = ImageFont.truetype('tgbot/bin_tran/ofont.ru_Roboto.ttf', size=31)
+    draw_lev = ImageDraw.Draw(deposit)
+    draw_lev.text(
+    	(int(295 + (int(font.getsize(data['amount'])[0])/2)), 221),
+    	data['coin'],
+    	font=font,
+    	fill='#161b1f')
+    
+    # deposit.paste(usdt, (int(292-((int(font.getsize(data['amount'])[0]) + 8 + 54)/2) + int(font.getsize(data['amount'])[0]) + 10), 235), mask=usdt.convert('RGBA'))
 
     # draw address
     font = ImageFont.truetype('tgbot/bin_tran/ofont.ru_Roboto.ttf', size=20)

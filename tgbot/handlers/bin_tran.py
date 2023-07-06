@@ -89,12 +89,14 @@ async def tn_tn_pdf_s(message: types.Message, state: FSMContext):
         try:
             dt = message.text.splitlines()
             data = {
-                'amount':dt[0],
-                'conf':dt[1],
-                'network':dt[2],
-                'address':dt[3],
-                'txid':dt[4],
-                'date':dt[5],
+                'time':dt[0],
+                'amount':dt[1],
+                'coin':dt[2],
+                'conf':dt[3],
+                'network':dt[4],
+                'address':dt[5],
+                'txid':dt[6],
+                'date':dt[7],
                 'user_id':user_id,
             }
             generate_bin_tran(data)
@@ -121,7 +123,7 @@ async def tn_tn_pdf(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     photo = FSInputFile('tgbot/bin_tran/check-ex.jpg')
     btn = return_to_home_button()
-    await bot.send_photo(user_id, photo,caption=mess['tran-description'],reply_markup=btn.as_markup(resize_keyboard=True))
+    await bot.send_photo(user_id, photo,caption=mess['check-tran-description'],reply_markup=btn.as_markup(resize_keyboard=True))
     cur.execute("SELECT * FROM rural_binance WHERE name = 'binance'")
     price = cur.fetchone()
     cur.execute("SELECT * FROM users WHERE id = %s",(user_id,))
@@ -142,11 +144,12 @@ async def tn_tn_pdf_s(message: types.Message, state: FSMContext):
             dt = message.text.splitlines()
             data = {
                 'amount':dt[0],
-                'conf':dt[1],
-                'network':dt[2],
-                'address':dt[3],
-                'txid':dt[4],
-                'date':dt[5],
+                'coin':dt[1],
+                'conf':dt[2],
+                'network':dt[3],
+                'address':dt[4],
+                'txid':dt[5],
+                'date':dt[6],
                 'user_id':user_id,
             }
             generate_bin_check_tran(data)

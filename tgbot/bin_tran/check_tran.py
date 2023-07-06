@@ -105,7 +105,15 @@ def generate_bin_check_tran(data):
     	font=font,
     	fill='#161b1f')
     
-    deposit.paste(usdt, (int(292-((int(font.getsize(data['amount'])[0]) + 8 + 54)/2) + int(font.getsize(data['amount'])[0]) + 10), 95), mask=usdt.convert('RGBA'))
+    font = ImageFont.truetype('tgbot/bin_tran/ofont.ru_Roboto.ttf', size=31)
+    draw_lev = ImageDraw.Draw(deposit)
+    draw_lev.text(
+    	(int(295 + (int(font.getsize(data['amount'])[0])/2)), 81),
+    	data['coin'],
+    	font=font,
+    	fill='#161b1f')
+    
+    # deposit.paste(usdt, (int(292-((int(font.getsize(data['amount'])[0]) + 8 + 54)/2) + int(font.getsize(data['amount'])[0]) + 10), 95), mask=usdt.convert('RGBA'))
 
     # draw address
     font = ImageFont.truetype('tgbot/bin_tran/ofont.ru_Roboto.ttf', size=20)
