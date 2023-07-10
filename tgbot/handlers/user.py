@@ -30,7 +30,7 @@ from tgbot.misc.functions import auf,add_transaction
 from tgbot.misc.texts import mess
 
 # from tgbot.keyboards.inlineBtn import CastomCallback
-from tgbot.keyboards.textBtn import main_menu_button, balance_menu_button, menu_tinkoff_button,checks_donate_button,checks_withdrawal_button,return_to_home_button,donate_choice_button,binance_menu_button
+from tgbot.keyboards.textBtn import main_menu_button, balance_menu_button, menu_tinkoff_button,checks_donate_button,checks_withdrawal_button,return_to_home_button,donate_choice_button,binance_menu_button,wallets_menu_button, exchange_menu_button
 # CastomCallback.filter(F.action == "") // callback_query: types.CallbackQuery, callback_data: SellersCallbackFactory, state: FSMContext
 
 import psycopg2
@@ -171,4 +171,16 @@ async def checks_withdrawal(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     btn = checks_withdrawal_button()
     await bot.send_message(user_id, "Выбери нужный чек",reply_markup=btn.as_markup(resize_keyboard=True))
+    
+@user_router.message(F.text == 'Чеки кошельков')
+async def checks_withdrawal(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    btn = wallets_menu_button()
+    await bot.send_message(user_id, "Выбери нужный кошелек",reply_markup=btn.as_markup(resize_keyboard=True))
+    
+@user_router.message(F.text == 'Чеки бирж')
+async def checks_withdrawal(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    btn = exchange_menu_button()
+    await bot.send_message(user_id, "Выбери нужный кошелек",reply_markup=btn.as_markup(resize_keyboard=True))
     

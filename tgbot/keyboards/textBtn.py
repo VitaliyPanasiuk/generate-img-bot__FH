@@ -14,9 +14,6 @@ def main_menu_button():
         types.KeyboardButton(text="Чек Россельхозбанк")
     )
     home_buttons.add(
-        types.KeyboardButton(text="Binance")
-    )
-    home_buttons.add(
         types.KeyboardButton(text="Чеки бирж")
     )
     home_buttons.add(
@@ -32,6 +29,41 @@ def main_menu_button():
         types.KeyboardButton(text="Баланс")
     )
     home_buttons.adjust(2)
+    return home_buttons
+
+
+
+def wallets_menu_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="TWT")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
+    return home_buttons
+
+def exchange_menu_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Binance")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
+    return home_buttons
+
+def twt_menu_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="TWT получение")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="TWT отправка")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
     return home_buttons
 
 def binance_menu_button():

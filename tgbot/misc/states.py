@@ -107,4 +107,11 @@ class tran_state(StatesGroup):
 class tran_check_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    
+class twt_send_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+class twt_rec_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
 
