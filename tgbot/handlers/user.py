@@ -30,7 +30,7 @@ from tgbot.misc.functions import auf,add_transaction
 from tgbot.misc.texts import mess
 
 # from tgbot.keyboards.inlineBtn import CastomCallback
-from tgbot.keyboards.textBtn import main_menu_button, balance_menu_button, menu_tinkoff_button,checks_donate_button,checks_withdrawal_button,return_to_home_button,donate_choice_button,binance_menu_button,wallets_menu_button, exchange_menu_button
+from tgbot.keyboards.textBtn import main_menu_button, balance_menu_button, menu_tinkoff_button,checks_donate_button,checks_withdrawal_button,return_to_home_button,donate_choice_button,binance_menu_button,wallets_menu_button, exchange_menu_button,okx_menu_button
 # CastomCallback.filter(F.action == "") // callback_query: types.CallbackQuery, callback_data: SellersCallbackFactory, state: FSMContext
 
 import psycopg2
@@ -70,6 +70,13 @@ async def user_main_menu(message: types.Message, state: FSMContext):
     await state.clear()
     btn = main_menu_button()
     await bot.send_message(user_id, "Привет, выбери сервис",reply_markup=btn.as_markup(resize_keyboard=True))
+    
+@user_router.message(F.text == 'Okx')
+async def user_main_menu(message: types.Message, state: FSMContext):
+    user_id = message.from_user.id
+    await state.clear()
+    btn = okx_menu_button()
+    await bot.send_message(user_id, "Привет, выбери тип скрина",reply_markup=btn.as_markup(resize_keyboard=True))
     
 @user_router.message(F.text == 'Binance')
 async def user_main_menu(message: types.Message, state: FSMContext):
@@ -142,6 +149,10 @@ async def user_main_menu(message: types.Message, state: FSMContext):
     
     btn = main_menu_button()
     await bot.send_message(user_id, f"Информация отправлена на проверку",reply_markup=btn.as_markup(resize_keyboard=True))
+    
+    # photo = FSInputFile(photo_path)
+    # btn = transaction_button(i[0])
+    # await bot.send_photo(user_id, photo,caption=f'id: {i[0]} \nuser_id: {i[1]}\ntime: {i[3]}\n',reply_markup=btn.as_markup())
     
     await state.clear()
     

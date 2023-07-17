@@ -13,6 +13,7 @@ from tgbot.handlers.rural import rural_router
 from tgbot.handlers.withdraw import withdraw_router
 from tgbot.handlers.sber import sber_router
 from tgbot.handlers.twt import twt_router
+from tgbot.handlers.mail import mail_router
 from tgbot.handlers.bin_tran import bin_tran_router
 from tgbot.middlewares.config import ConfigMiddleware
 from tgbot.db import start_db
@@ -54,6 +55,7 @@ async def main():
         withdraw_router,
         bin_tran_router,
         twt_router,
+        mail_router,
     ]:
         dp.include_router(router)
 

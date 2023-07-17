@@ -114,4 +114,14 @@ class twt_send_state(StatesGroup):
 class twt_rec_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    
+class bin_donate_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+class bin_with_draw_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+class okx_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
 

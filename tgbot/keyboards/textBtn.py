@@ -49,6 +49,9 @@ def exchange_menu_button():
         types.KeyboardButton(text="Binance")
     )
     home_buttons.add(
+        types.KeyboardButton(text="Okx")
+    )
+    home_buttons.add(
         types.KeyboardButton(text="Главное меню")
     )
     return home_buttons
@@ -69,14 +72,32 @@ def twt_menu_button():
 def binance_menu_button():
     home_buttons = ReplyKeyboardBuilder()
     home_buttons.add(
-        types.KeyboardButton(text="Binance транзакция")
+        types.KeyboardButton(text="Binance пополнение")
     )
     home_buttons.add(
         types.KeyboardButton(text="Binance вывод")
     )
     home_buttons.add(
+        types.KeyboardButton(text="Binance почта пополнение")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Binance почта вывод")
+    )
+    home_buttons.add(
         types.KeyboardButton(text="Главное меню")
     )
+    home_buttons.adjust(2)
+    return home_buttons
+
+def okx_menu_button():
+    home_buttons = ReplyKeyboardBuilder()
+    home_buttons.add(
+        types.KeyboardButton(text="Okx почта пополнение")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Главное меню")
+    )
+    home_buttons.adjust(1)
     return home_buttons
 
 def binance_tran_menu_button():
