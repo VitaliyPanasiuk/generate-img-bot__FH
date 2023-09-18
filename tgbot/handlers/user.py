@@ -32,6 +32,7 @@ from tgbot.misc.texts import mess
 # from tgbot.keyboards.inlineBtn import CastomCallback
 from tgbot.keyboards.textBtn import main_menu_button, balance_menu_button, menu_tinkoff_button,checks_donate_button,checks_withdrawal_button,return_to_home_button,donate_choice_button,binance_menu_button,wallets_menu_button, exchange_menu_button,okx_menu_button
 # CastomCallback.filter(F.action == "") // callback_query: types.CallbackQuery, callback_data: SellersCallbackFactory, state: FSMContext
+from tgbot.keyboards.inlineBtn import CastomCallbackOfEndingTransaction, transaction_button
 
 import psycopg2
 from psycopg2 import sql
@@ -113,7 +114,7 @@ async def user_main_menu(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     
     
-    cur.execute("SELECT * FROM requisites WHERE name = 'fiat'")
+    cur.execute("SELECT * FROM requisites WHERE name = 'card'")
     adress = cur.fetchone()
     
     btn = return_to_home_button()
@@ -149,6 +150,18 @@ async def user_main_menu(message: types.Message, state: FSMContext):
     
     btn = main_menu_button()
     await bot.send_message(user_id, f"Информация отправлена на проверку",reply_markup=btn.as_markup(resize_keyboard=True))
+    
+    
+    cur.execute(f"SELECT * FROM transactions WHERE time = '{s_current_datetime}'")
+    transaction = cur.fetchone()
+    
+    # [762342298,6197913672]
+    photo = FSInputFile(photo_path)
+    btn = transaction_button(transaction[0])
+    await bot.send_photo(chat_id = 762342298, photo = photo, caption=f'''Заявка №{transaction[0]}
+Id пользователя: {user_id}
+Имя пользователя: {message.from_user.username}\n''',
+reply_markup=btn.as_markup())
     
     # photo = FSInputFile(photo_path)
     # btn = transaction_button(i[0])

@@ -285,7 +285,7 @@ async def changing_requisites_crypto(message: types.Message, state: FSMContext):
 async def changing_requisites_crypto(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     text = message.text
-    cur.execute("UPDATE requisites SET adress = %s WHERE name =  'btc'",(text,))
+    cur.execute(f"UPDATE requisites SET adress = {text} WHERE name =  'btc'")
     base.commit()
     
     btn = admin_panel_button()
@@ -343,7 +343,14 @@ async def user_start(callback_query: types.CallbackQuery,callback_data: CastomCa
     await state.update_data(order_id=order_id)
     await state.set_state(end_change_balance_state.amount)
     
+@admin_router.callback_query(CastomCallbackOfEndingTransaction.filter(F.action == "dicline_transaction"))
+async def user_start(callback_query: types.CallbackQuery,callback_data: CastomCallbackOfEndingTransaction,state: FSMContext,):
+    user_id = callback_query.from_user.id
+    order_id = callback_data.transaction_id
     
+    await end_transaction(order_id)
+    
+    await bot.send_message(user_id, "Транзакция была отклоненна",reply_markup=btn.as_markup(resize_keyboard=True))
     
     
 @admin_router.message(F.text, end_change_balance_state.amount)

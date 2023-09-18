@@ -17,6 +17,9 @@ def transaction_button(id):
     # ))
     builder = InlineKeyboardBuilder()
     builder.button(
-        text="Готово", callback_data=CastomCallbackOfEndingTransaction(action="end_transaction",transaction_id=int(id))
+        text="Одобрить", callback_data=CastomCallbackOfEndingTransaction(action="end_transaction",transaction_id=int(id))
+    )
+    builder.button(
+        text="Отклонить", callback_data=CastomCallbackOfEndingTransaction(action="dicline_transaction",transaction_id=int(id))
     )
     return builder
