@@ -84,6 +84,9 @@ def binance_menu_button():
         types.KeyboardButton(text="Binance почта вывод")
     )
     home_buttons.add(
+        types.KeyboardButton(text="Binance pnl")
+    )
+    home_buttons.add(
         types.KeyboardButton(text="Главное меню")
     )
     home_buttons.adjust(2)

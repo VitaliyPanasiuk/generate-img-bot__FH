@@ -124,4 +124,7 @@ class bin_with_draw_state(StatesGroup):
 class okx_state(StatesGroup):
     user_id = State()
     gen_data = State()
+class pnl_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
 
