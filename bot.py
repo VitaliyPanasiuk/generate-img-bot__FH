@@ -16,6 +16,8 @@ from tgbot.handlers.twt import twt_router
 from tgbot.handlers.mail import mail_router
 from tgbot.handlers.pnl import pnl_router
 from tgbot.handlers.bin_tran import bin_tran_router
+from tgbot.handlers.pnl_okx import pnl_okx_router
+from tgbot.handlers.okx_history import okx_history_router
 from tgbot.middlewares.config import ConfigMiddleware
 from tgbot.db import start_db
 from tgbot.services import broadcaster
@@ -58,6 +60,8 @@ async def main():
         twt_router,
         mail_router,
         pnl_router,
+        pnl_okx_router,
+        okx_history_router,
     ]:
         dp.include_router(router)
 

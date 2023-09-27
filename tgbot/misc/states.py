@@ -127,4 +127,13 @@ class okx_state(StatesGroup):
 class pnl_state(StatesGroup):
     user_id = State()
     gen_data = State()
+    
+class okx_history_state(StatesGroup):
+    user_id = State()
+    gen_data = State()
+    
+class pnl_okx_state(StatesGroup):
+    user_id = State()
+    img = State()
+    gen_data = State()
 

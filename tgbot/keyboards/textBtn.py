@@ -98,6 +98,12 @@ def okx_menu_button():
         types.KeyboardButton(text="Okx почта пополнение")
     )
     home_buttons.add(
+        types.KeyboardButton(text="Okx pnl")
+    )
+    home_buttons.add(
+        types.KeyboardButton(text="Okx история")
+    )
+    home_buttons.add(
         types.KeyboardButton(text="Главное меню")
     )
     home_buttons.adjust(1)
